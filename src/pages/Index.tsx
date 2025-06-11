@@ -1,9 +1,8 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Mic, MicOff, MapPin, Target, TrendingUp, Settings, Golf } from 'lucide-react';
+import { Mic, MicOff, MapPin, Target, TrendingUp, Settings } from 'lucide-react';
 import VoiceInterface from '@/components/VoiceInterface';
 import CalibrationCard from '@/components/CalibrationCard';
 import ShotDecision from '@/components/ShotDecision';
@@ -20,7 +19,7 @@ const Index = () => {
       <header className="bg-white/80 backdrop-blur-sm border-b border-green-200 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Golf className="h-8 w-8 text-green-600" />
+            <Target className="h-8 w-8 text-green-600" />
             <h1 className="text-2xl font-bold text-green-800">WYC</h1>
             <span className="text-sm text-green-600 font-medium">What's Your Caddie</span>
           </div>
@@ -49,7 +48,7 @@ const Index = () => {
               Calibration
             </TabsTrigger>
             <TabsTrigger value="play" className="data-[state=active]:bg-green-600 data-[state=active]:text-white">
-              <Golf className="h-4 w-4 mr-2" />
+              <Target className="h-4 w-4 mr-2" />
               Play
             </TabsTrigger>
             <TabsTrigger value="stats" className="data-[state=active]:bg-green-600 data-[state=active]:text-white">
