@@ -3,9 +3,6 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -17,20 +14,22 @@ import {
   TrendingUp,
   Settings,
   Menu,
+  LogOutIcon,
 } from "lucide-react";
-import VoiceInterface from "@/components/VoiceInterface";
 import CalibrationCard from "@/components/CalibrationCard";
 import ShotDecision from "@/components/ShotDecision";
 import PerformanceStats from "@/components/PerformanceStats";
-import PostRoundSummary from "@/components/PostRoundSummary";
-import LiveKitModal from "./LiveKitModal";
-import { Route, Router, useNavigate } from "react-router-dom";
+// import PostRoundSummary from "@/components/PostRoundSummary";
+// import LiveKitModal from "./LiveKitModal";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 const Index = () => {
   const navigate = useNavigate();
   const handleSupportClick = () => {
     navigate("/caddy");
   };
+  const { name, logout } = useUser();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50">
@@ -46,14 +45,20 @@ const Index = () => {
           </div>
 
           {/* Desktop Settings Button */}
-          <Button
-            variant="outline"
-            size="sm"
-            className="text-green-700 border-green-300 hidden md:flex"
-          >
-            <Settings className="h-4 w-4 mr-2" />
-            Settings
-          </Button>
+          <div className="flex items-center gap-4">
+            <div className="text-green-600 font-medium hidden sm:inline border-r pr-4 border-green-500">
+              {name}
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              className="text-green-700 border-green-300 hidden md:flex"
+              onClick={logout}
+            >
+              <LogOutIcon className="h-4 w-4 mr-2" />
+              Logout
+            </Button>
+          </div>
 
           {/* Mobile Menu */}
           <Sheet>
@@ -71,9 +76,10 @@ const Index = () => {
                 <Button
                   variant="ghost"
                   className="justify-start text-green-700"
+                  onClick={logout}
                 >
-                  <Settings className="h-4 w-4 mr-2" />
-                  Settings
+                  <LogOutIcon className="h-4 w-4 mr-2" />
+                  Logout
                 </Button>
               </div>
             </SheetContent>
@@ -85,7 +91,7 @@ const Index = () => {
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="play" className="w-full">
           {/* Mobile-friendly tabs */}
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-8 bg-white/50">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 mb-8 bg-white/50">
             <TabsTrigger
               value="calibration"
               className="data-[state=active]:bg-green-600 data-[state=active]:text-white text-xs sm:text-sm"
@@ -108,14 +114,14 @@ const Index = () => {
               <TrendingUp className="h-4 w-4 mr-1 sm:mr-2" />
               Stats
             </TabsTrigger>
-            <TabsTrigger
+            {/* <TabsTrigger
               value="summary"
               className="data-[state=active]:bg-green-600 data-[state=active]:text-white text-xs sm:text-sm"
             >
               <MapPin className="h-4 w-4 mr-1 sm:mr-2" />
               <span className="hidden sm:inline">Summary</span>
               <span className="sm:hidden">Sum</span>
-            </TabsTrigger>
+            </TabsTrigger> */}
           </TabsList>
 
           <TabsContent value="calibration" className="space-y-6">
@@ -165,7 +171,7 @@ const Index = () => {
             <PerformanceStats />
           </TabsContent>
 
-          <TabsContent value="summary" className="space-y-6">
+          {/* <TabsContent value="summary" className="space-y-6">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-green-800 mb-2">
                 Round Summary
@@ -174,8 +180,8 @@ const Index = () => {
                 Review your performance and get practice tips
               </p>
             </div>
-            <PostRoundSummary />
-          </TabsContent>
+            {/* <PostRoundSummary /> */}
+          {/* </TabsContent> */} 
         </Tabs>
       </main>
     </div>

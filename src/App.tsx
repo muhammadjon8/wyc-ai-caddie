@@ -7,6 +7,9 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import LiveKitModal from "./pages/LiveKitModal";
 import { useState } from "react";
+import Register from "./pages/Register";
+import ProtectedRoute from "./ProtectedRoute";
+import { UserProvider } from "./context/UserContext";
 
 const queryClient = new QueryClient();
 
@@ -18,20 +21,33 @@ const App = () => {
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route
-              path="/caddy"
-              element={<LiveKitModal setShowSupport={setShowSupport} />}
-            />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <UserProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <Index />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/caddy"
+                element={
+                  <ProtectedRoute>
+                    <LiveKitModal setShowSupport={setShowSupport} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/register" element={<Register />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </UserProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );
 };
 
 export default App;
-
