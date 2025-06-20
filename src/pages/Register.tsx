@@ -27,7 +27,7 @@ const Register = () => {
     }
 
     try {
-      setLoading(true); // ✅ Show loading screen
+      setLoading(true);
 
       const userToken = await axios.post(
         `https://patient-grouper-infinite.ngrok-free.app/v1/sessions/create-session`,
@@ -49,10 +49,11 @@ const Register = () => {
       navigate("/");
     } catch (err) {
       setError("Failed to create session. Please try again.");
-      setLoading(false); // ❗ Hide loading screen on failure
+      setLoading(false);
     }
   };
   
+
   function LoadingAnimation() {
     return (
       <div className="flex items-center justify-center h-screen">

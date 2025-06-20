@@ -122,11 +122,16 @@ body,
   .conversation-panel,
   .course-conditions {
     width: 100%;
-    height: 500px;
-    margin-bottom: 100px;
+    /* height: 500px; */
+    flex: none;
   }
 
   .conversation {
     max-height: 400px;
+  }
+  .lk-agent-control-bar {
+    position: relative;
+    bottom: 0;
+    width: 100%;
   }
 }
