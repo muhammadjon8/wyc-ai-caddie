@@ -23,7 +23,7 @@ const Register = () => {
       return;
     }
     const userToken = await axios.post(
-      `https://df8b-185-230-204-108.ngrok-free.app/v1/sessions/create-session`,
+      `https://patient-grouper-infinite.ngrok-free.app/v1/sessions/create-session`,
       {
         name: username.trim(),
       }
