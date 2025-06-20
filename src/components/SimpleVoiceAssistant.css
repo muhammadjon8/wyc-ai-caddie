@@ -23,7 +23,7 @@ body,
   flex: 2;
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  overflow: auto;
   height: 600px;
 }
 
@@ -48,6 +48,16 @@ body,
   margin: 0 auto;
   padding: 20px 0;
   height: 100%;
+}
+
+.lk-agent-control-bar {
+  height: var(--lk-control-bar-height);
+  --lk-bg: transparent;
+  --lk-va-bar-width: 2px;
+  --lk-va-bar-gap: 4px;
+  --lk-va-bar-border-radius: 1px;
+  position: fixed;
+  bottom: 10px;
 }
 
 .visualizer-container {
@@ -117,6 +127,6 @@ body,
   }
 
   .conversation {
-    max-height: 300px;
+    max-height: 400px;
   }
 }

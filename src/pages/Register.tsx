@@ -2,12 +2,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import axios from "axios";
+import { GearIcon } from "@livekit/components-react";
 
 const Register = () => {
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const { register } = useUser();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
 
   const validateUsername = (name: string): boolean => {
     const regex = /^[A-Za-z\s]{2,}$/;
@@ -18,28 +21,55 @@ const Register = () => {
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
+
     if (!validateUsername(username.trim())) {
       setError("Name must be at least 2 letters and contain only letters.");
       return;
     }
-    const userToken = await axios.post(
-      `https://patient-grouper-infinite.ngrok-free.app/v1/sessions/create-session`,
-      {
-        name: username.trim(),
-      }
-    );
-    localStorage.setItem("userToken", userToken.data.user_token);
-    localStorage.setItem("livekitUrl", userToken.data.livekit_url);
-    setError("");
-    register(
-      username.trim(),
-      userToken.data.user_token,
-      userToken.data.livekit_url
-    );
-    navigate("/");
-  };
 
-  return (
+    try {
+      setLoading(true); // ✅ Show loading screen
+
+      const userToken = await axios.post(
+        `https://patient-grouper-infinite.ngrok-free.app/v1/sessions/create-session`,
+        {
+          name: username.trim(),
+        }
+      );
+
+      localStorage.setItem("userToken", userToken.data.user_token);
+      localStorage.setItem("livekitUrl", userToken.data.livekit_url);
+      setError("");
+
+      register(
+        username.trim(),
+        userToken.data.user_token,
+        userToken.data.livekit_url
+      );
+
+      navigate("/");
+    } catch (err) {
+      setError("Failed to create session. Please try again.");
+      setLoading(false); // ❗ Hide loading screen on failure
+    }
+  };
+  
+  function LoadingAnimation() {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-center">
+          <GearIcon className="h-8 w-8 animate-spin text-green-600" />
+          <p className="mt-4 text-lg text-gray-700">
+            Loading your session, please wait...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return loading ? (
+    <LoadingAnimation />
+  ) : (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-green-100 via-green-200 to-green-300">
       <form
         onSubmit={handleSubmit}
@@ -69,6 +99,7 @@ const Register = () => {
       </form>
     </div>
   );
+
 };
 
 export default Register;
