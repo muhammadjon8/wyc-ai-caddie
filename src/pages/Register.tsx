@@ -16,7 +16,6 @@ const Register = () => {
     const regex = /^[A-Za-z\s]{2,}$/;
     return regex.test(name);
   };
-
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
